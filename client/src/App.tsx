@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Suspense } from 'react';
+import { Canvas } from '@react-three/fiber';
+import Box from './components/Box';
+import { OrbitControls } from '@react-three/drei';
+import { Stars } from '@react-three/drei/core';
+import Sphere from './components/Sphere';
+import { useRef } from 'react';
+import { PerspectiveCamera } from 'three';
+import './App.css';
+
+type DirectionalLightProps = {
+  position: [x: number, y: number, z: number];
+  // Additional properties can be added here
+};
 
 function App() {
-  const [count, setCount] = useState(0)
+  const lightProps: DirectionalLightProps = {
+    position: [-2, 5, 2],
+    // Additional properties can be added here
+  };
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <>
+      <Canvas className='canvas'>
+        <Stars />
+        <Suspense fallback={null}>
+          <Box />
+        </Suspense>
+        <Suspense fallback={null}>
+          <Sphere />
+        </Suspense>
+        <OrbitControls enableZoom={false} />
+        <ambientLight intensity={0.5} />
+        <directionalLight {...lightProps} intensity={1} />
+      </Canvas>
+    </>
+  );
 }
 
-export default App
+export default App;
