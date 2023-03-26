@@ -4,8 +4,6 @@ import sphereTexture from '../images/sphereTexture.webp';
 import { useState } from 'react';
 import { Euler } from 'three';
 
-import React from 'react';
-
 type SphereGeometryArgs = {
   radius: number;
 };

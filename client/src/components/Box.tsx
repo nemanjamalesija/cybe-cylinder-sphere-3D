@@ -1,7 +1,5 @@
-import React, { useRef, useState } from 'react';
-import textureBox from '../images/textureBox.jpg';
-import { useLoader, useFrame } from '@react-three/fiber';
-import { TextureLoader } from 'three/src/loaders/TextureLoader';
+import React, { useState } from 'react';
+import { useFrame } from '@react-three/fiber';
 import { Euler } from 'three';
 
 type BoxGeometryArgs = {
@@ -17,7 +15,6 @@ const geometryArgs: BoxGeometryArgs = {
 };
 
 const Box = () => {
-  const colorMapBox = useLoader(TextureLoader, textureBox);
   const [rotation, setRotation] = useState([0, 0, 0]);
 
   useFrame((state, delta) => {
@@ -35,7 +32,7 @@ const Box = () => {
         attach='geometry'
         args={[...Object.values(geometryArgs)]}
       />
-      <meshStandardMaterial map={colorMapBox} />
+      <meshNormalMaterial attach='material' />
     </mesh>
   );
 };
